@@ -11,6 +11,6 @@ def kthDistinct(arr, k):
     return ""
 
 
-arr = ["d","b","c","b","c","a"]
+arr = ["d", "b", "c", "b", "c", "a"]
 k = 2
 print(kthDistinct(arr, k))
