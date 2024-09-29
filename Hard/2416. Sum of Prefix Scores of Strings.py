@@ -5,7 +5,7 @@ class TrieNode:
 
 
 class Solution:
-    def sumPrefixScores(self, words: List[str]) -> List[int]:
+    def sumPrefixScores(self, words):
         # Step 1: Build the Trie
         root = TrieNode()
 
