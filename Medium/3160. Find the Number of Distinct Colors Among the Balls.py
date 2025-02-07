@@ -3,23 +3,35 @@ from collections import defaultdict
 
 def queryResults(limit, queries):
     res = []
+    curr = 0
+    distinct_colors = set()
     colors = defaultdict(int)
-    cnt = 0
+    balls = {}
 
-    for i in queries:
-        if i[0] not in colors:
-            cnt += 1
-            colors[i[0]] = i[1]
+    for x, y in queries:
+        if x in balls:
+            prev_color = balls[x]
+            if prev_color in distinct_colors:
+                colors[prev_color] -= 1
+                if colors[prev_color] == 0:
+                    distinct_colors.remove(prev_color)
+                    curr -= 1
+
+            balls[x] = y
+
         else:
-            if colors[i[0]] != i[1]:
-                cnt += 1
-                colors[i[0]] = i[1]
+            balls[x] = y
 
-        res.append(cnt)
+        if colors[y] == 0:
+            distinct_colors.add(y)
+            curr += 1
+        colors[y] += 1
+
+        res.append(curr)
 
     return res
 
 
-limit = 4
-queries = [[1,4],[2,5],[1,3],[3,4]]
+limit = 1
+queries = [[0,1],[0,4],[0,4],[0,1],[1,2]]
 print(queryResults(limit, queries))
