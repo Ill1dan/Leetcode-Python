@@ -14,7 +14,7 @@ def lenLongestFibSubseq(arr):
                 nxt = prev + cur
                 res = max(res, length)
 
-        return res
+    return res
 
 arr = [1,2,3,4,5,6,7,8]
 print(lenLongestFibSubseq(arr))
