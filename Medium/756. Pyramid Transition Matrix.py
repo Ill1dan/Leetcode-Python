@@ -1,0 +1,40 @@
+from collections import defaultdict
+from itertools import product
+
+class Solution(object):
+    def pyramidTransition(self, bottom, allowed):
+        allowed_map = defaultdict(list)
+        for a in allowed:
+            allowed_map[a[:2]].append(a[2])
+        memo = {}
+
+        def rec(bottom):
+            if len(bottom) == 1:
+                return True
+            if bottom in memo:
+                return memo[bottom]
+
+            possible_tops = []
+            for i in range(1, len(bottom)):
+                pair = bottom[i-1] + bottom[i]
+                if pair in allowed_map:
+                    possible_tops.append(allowed_map[pair])
+                else:
+                    # If any pair has no valid top, this row is a dead end
+                    memo[bottom] = False
+                    return False
+            
+            # Cartesian product to generate all possible next rows
+            # This is the "transition" step where we branch out
+            for next_top_tuple in product(*possible_tops):
+                next_top = "".join(next_top_tuple)
+                if rec(next_top):
+                    memo[bottom] = True
+                    return True
+
+            # If no combination works
+            memo[bottom] = False
+            return False
+
+        return rec(bottom)
+        
